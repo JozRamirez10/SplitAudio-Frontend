@@ -1,0 +1,7 @@
+{
+  "name": "SplitAudio-Frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
