@@ -1,0 +1,82 @@
+:host {
+  @apply block;
+}
+
+.accordion-card {
+  @apply bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg transition-all duration-200 hover:border-slate-700;
+
+  &__header {
+    @apply flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 sm:px-6 cursor-pointer select-none hover:bg-slate-800/40 transition-colors;
+  }
+
+  &__info {
+    @apply flex flex-wrap items-center gap-3 sm:gap-4 min-w-0;
+  }
+
+  &__title {
+    @apply text-base sm:text-lg font-semibold text-white truncate;
+  }
+
+  &__subtitle {
+    @apply text-xs text-slate-400;
+  }
+
+  &__badges {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
+  &__controls {
+    @apply flex items-center justify-end gap-2 shrink-0;
+  }
+
+  &__actions {
+    @apply flex items-center gap-2;
+  }
+
+  &__chevron {
+    @apply pl-2 text-slate-400 flex items-center;
+  }
+
+  &__body {
+    @apply px-4 pb-5 pt-3 sm:px-6 bg-slate-950/60 border-t border-slate-800/80;
+  }
+
+  &__section-label {
+    @apply text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3;
+  }
+
+  &__grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3;
+  }
+
+  /* =========================================
+     Tooltip & Botones Deshabilitados
+     ========================================= */
+  
+  &__tooltip-wrapper {
+    /* Quitamos el 'group' de aquí */
+    @apply relative inline-flex;
+
+    /* Magia SCSS: Cuando hagas hover en el wrapper, animamos la burbuja interna */
+    &:hover .accordion-card__tooltip-bubble {
+      @apply opacity-100 scale-100;
+    }
+  }
+
+  &__tooltip-bubble {
+    /* Quitamos los group-hover de aquí */
+    @apply absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-1.5 
+           bg-indigo-600 text-white text-xs font-semibold rounded-lg shadow-xl 
+           opacity-0 scale-95 origin-right 
+           transition-all duration-200 z-50 whitespace-nowrap pointer-events-none;
+  }
+
+  &__tooltip-arrow {
+    @apply absolute top-1/2 left-full -translate-y-1/2 
+           border-[5px] border-transparent border-l-indigo-600;
+  }
+
+  &__btn-disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
