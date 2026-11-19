@@ -1,0 +1,19 @@
+.track-row {
+  @apply flex items-center justify-between px-4 py-3 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 rounded-xl transition-all duration-150;
+
+  &__info {
+    @apply flex items-center gap-3 min-w-0;
+  }
+
+  &__title {
+    @apply text-sm font-medium text-slate-200 truncate;
+  }
+
+  &__type {
+    @apply text-xs text-slate-400 uppercase tracking-wider;
+  }
+
+  &__download-btn {
+    @apply flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-700/70 hover:bg-indigo-600 text-slate-200 hover:text-white text-xs font-medium transition-colors shrink-0;
+  }
+}
