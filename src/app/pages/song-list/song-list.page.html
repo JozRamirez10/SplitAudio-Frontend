@@ -1,0 +1,66 @@
+<ion-content class="studio-content">
+
+  <app-active-jobs-badge class="position-bottom" />
+
+  <div class="studio-container">
+
+    <header class="page-header">
+      <div>
+        <h1 class="page-header__title">Split Audio Studio</h1>
+        <p class="page-header__subtitle">
+          Biblioteca de pistas de <span class="text-indigo-400 font-medium">{{ songState.currentUserEmail() }}</span>
+        </p>
+      </div>
+
+      <div class="page-header__actions">
+        <button type="button" (click)="onRefresh()" class="btn-icon" title="Actualizar lista">
+          <ion-icon name="refresh-outline" class="text-xl"></ion-icon>
+        </button>
+
+        <button type="button" (click)="goToUpload()" class="btn-primary">
+          <ion-icon name="add-circle-outline" class="text-xl"></ion-icon>
+          <span>Agregar canción</span>
+        </button>
+      </div>
+    </header>
+
+    @if (songState.errorMessage()) {
+      <div class="alert-error">
+        {{ songState.errorMessage() }}
+      </div>
+    }
+
+    @if (songState.isLoading()) {
+      <div class="loading-state">
+        <ion-spinner name="crescent" class="w-10 h-10 text-indigo-500"></ion-spinner>
+        <p class="text-slate-400 text-sm">Cargando tus canciones procesadas...</p>
+      </div>
+    } @else if (songState.songs().length === 0 && !songState.errorMessage() ) {
+      <div class="empty-state">
+        <div class="icon-box-lg">
+          <ion-icon name="cloud-upload-outline" class="text-3xl"></ion-icon>
+        </div>
+        <h2 class="empty-state__title">Aún no tienes canciones procesadas</h2>
+        <p class="empty-state__description">
+          Sube tu primera canción para separar sus instrumentos con Demucs y generar su pista de metrónomo automáticamente.
+        </p>
+        <button type="button" (click)="goToUpload()" class="btn-primary">
+          Subir mi primera canción
+        </button>
+      </div>
+    } @else {
+      <div class="songs-list">
+        @for (song of songState.songs(); track song.id) {
+          <app-song-accordion-item
+            [song]="song"
+            [isDownloadingZip]="songState.downloadingSongId() === song.id"
+            (downloadTrack)="onDownloadTrack($event)"
+            (downloadZip)="onDownloadZip($event)"
+            (deleteSong)="onDeleteSong($event)">
+          </app-song-accordion-item>
+        }
+      </div>
+    }
+
+  </div>
+</ion-content>

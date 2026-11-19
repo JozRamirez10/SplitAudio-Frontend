@@ -1,0 +1,71 @@
+.youtube-container {
+  @apply bg-slate-800/50 border border-slate-700 rounded-xl p-5;
+}
+
+.youtube-input-wrapper {
+  @apply relative;
+}
+
+.youtube-icon {
+  @apply absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl;
+}
+
+.youtube-input {
+  @apply w-full bg-slate-900 border border-slate-700 text-white pl-12 pr-4 py-3 rounded-lg 
+         focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 
+         transition-colors placeholder:text-slate-500;
+  
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+.youtube-loader {
+  @apply flex items-center justify-center gap-3 mt-6 text-slate-400 text-sm;
+  
+  .spinner {
+    @apply w-5 h-5 border-2 border-red-500/30 border-t-red-500 rounded-full animate-spin;
+  }
+}
+
+/* Tarjeta de Previsualización */
+.youtube-card {
+  @apply mt-5 flex gap-4 p-3 bg-slate-900 rounded-lg border border-slate-700;
+}
+
+.youtube-card-thumbnail {
+  @apply w-32 h-auto object-cover rounded-md shadow-lg border border-slate-800;
+}
+
+.youtube-card-content {
+  @apply flex flex-col justify-center;
+}
+
+.youtube-card-title {
+  @apply text-white font-medium text-sm line-clamp-2 leading-snug;
+}
+
+.youtube-card-badge {
+  @apply text-xs text-red-400 mt-2 flex items-center gap-1;
+}
+
+/* Alerta de URL Inválida */
+.youtube-warning {
+  @apply mt-4 flex items-center gap-2 text-amber-400 bg-amber-400/10 p-3 rounded-lg text-sm;
+}
+
+/* Animación fluida de entrada */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(5px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}

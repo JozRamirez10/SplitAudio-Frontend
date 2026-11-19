@@ -1,0 +1,53 @@
+<div class="progress-layout">
+        
+  @if (songState.currentJobStatus()?.status === 'PENDING') {
+    
+    <div class="status-box status-box--queue">
+      <ion-icon name="time-outline" class="text-4xl"></ion-icon>
+    </div>
+
+    <h2 class="status-title">Canción en cola</h2>
+    
+    <p class="status-subtitle text-amber-400">
+      Hay {{ songState.currentJobStatus()?.jobsAhead || 0 }} 
+      {{ (songState.currentJobStatus()?.jobsAhead || 0) === 1 ? 'canción procesándose' : 'canciones procesándose' }} 
+      antes que tu canción.
+    </p>
+
+    <p class="status-disclaimer">
+      El orquestador está trabajando. Tu separación de pistas arrancará automáticamente cuando sea tu turno.
+    </p>
+
+  } @else {
+
+    <div class="status-box status-box--processing">
+      <ion-icon name="musical-notes-outline" class="text-4xl"></ion-icon>
+    </div>
+
+    <h2 class="status-title">Procesando tu canción</h2>
+    
+    <p class="status-subtitle text-indigo-400">
+      {{ progressMessage() }}
+    </p>
+
+    <div class="progress-bar-wrapper">
+      <div class="progress-bar-info">
+        <span>Progreso estimado</span>
+        <span>{{ progress() | number:'1.0-0' }}%</span>
+      </div>
+      
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" [style.width.%]="progress()">
+          <div class="progress-bar-glow"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="status-disclaimer">
+      Este proceso toma aproximadamente {{ estimatedTotalTime }} minutos. 
+      Por favor, no cierres ni recargues esta pestaña.
+    </p>
+
+  }
+
+</div>

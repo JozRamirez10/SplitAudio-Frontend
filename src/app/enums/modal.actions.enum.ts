@@ -1,0 +1,10 @@
+export enum ModalActions {
+    LOADING,
+    DELETE_SUCCESS,
+    ERROR_DELETE,
+    ERROR_SONG_LOADING,
+    ERROR_DOWNLOAD,
+    ERROR_CONNECTION,
+    ERROR_SERVER,
+    CUSTOM
+}

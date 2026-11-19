@@ -12,6 +12,8 @@ $RECYCLE.BIN/
 *.log
 log.txt
 
+*.env
+!.env.example
 
 /.sourcemaps
 /.versions
@@ -48,7 +50,6 @@ yarn-error.log
 .vscode/*
 .history/*
 
-
 # Miscellaneous
 /.angular
 /.angular/cache
@@ -66,4 +67,3 @@ Thumbs.db
 
 # Custom
 *.txt
-

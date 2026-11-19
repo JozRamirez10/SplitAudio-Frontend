@@ -1,0 +1,40 @@
+<div class="youtube-container">
+  
+  <div class="youtube-input-wrapper">
+    <ion-icon name="link-outline" class="youtube-icon"></ion-icon>
+    <input 
+      type="text" 
+      placeholder="Pega el enlace de YouTube aquí..." 
+      [value]="url()"
+      (input)="onInputChange($event)"
+      [disabled]="disabled"
+      class="youtube-input">
+  </div>
+
+  @if (isFetching()) {
+    <div class="youtube-loader">
+      <div class="spinner"></div>
+      <span>Buscando video...</span>
+    </div>
+  }
+
+  @if (metadata()) {
+    <div class="youtube-card animate-fade-in">
+      <img [src]="metadata()!.thumbnail" alt="Thumbnail" class="youtube-card-thumbnail">
+      <div class="youtube-card-content">
+        <h3 class="youtube-card-title">{{ metadata()!.title }}</h3>
+        <span class="youtube-card-badge">
+          <ion-icon name="checkmark-circle"></ion-icon> Video encontrado
+        </span>
+      </div>
+    </div>
+  }
+
+  @if (url().length > 10 && !metadata() && !isFetching()) {
+    <div class="youtube-warning animate-fade-in">
+      <ion-icon name="alert-circle-outline" class="text-lg shrink-0"></ion-icon>
+      Por favor, ingresa una URL válida de YouTube.
+    </div>
+  }
+
+</div>

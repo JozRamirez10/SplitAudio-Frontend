@@ -1,0 +1,132 @@
+<ion-content class="studio-content">
+
+  <app-active-jobs-badge
+    class="position-top"
+    [class.hidden]="showProgressScreen()">
+  </app-active-jobs-badge>
+
+  <div class="studio-container">
+
+    <header class="upload-header">
+      @if (!showProgressScreen()) {
+        <button
+          type="button"
+          (click)="goBack()"
+          class="btn-icon"
+          title="Volver a la biblioteca">
+          <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+        </button>
+      }
+
+      <div>
+        <h1 class="upload-header__title">Subir y Configurar Canción</h1>
+        <p class="upload-header__subtitle">
+          Elige el archivo de audio o pega un enlace para separar los stems
+        </p>
+      </div>
+    </header>
+
+    @if (songState.errorMessage()) {
+      <div class="alert-error mb-6">
+        {{ songState.errorMessage() }}
+      </div>
+    }
+
+    <!-- PANTALLA 1: FORMULARIO -->
+    @if (!showProgressScreen()) {
+      
+      <!-- CONTROLES DE PESTAÑA -->
+      <div class="tab-control">
+        <button 
+          (click)="inputType.set(SongInputType.FILE)"
+          class="tab-control__btn"
+          [class.tab-control__btn--active-file]="inputType() === SongInputType.FILE">
+          <ion-icon name="document-text-outline" class="text-lg"></ion-icon>
+          Archivo Local
+        </button>
+        <button 
+          (click)="inputType.set(SongInputType.YOUTUBE)"
+          class="tab-control__btn"
+          [class.tab-control__btn--active-yt]="inputType() === SongInputType.YOUTUBE">
+          <ion-icon name="logo-youtube" class="text-lg"></ion-icon>
+          YouTube
+        </button>
+      </div>
+
+      <!-- Componente 1: Origen del Audio -->
+      <section class="upload-section">
+        <h2 class="upload-section__title">1. Origen del Audio</h2>
+        
+        @if (inputType() === SongInputType.FILE) {
+          <app-file-dropzone
+            [selectedFile]="selectedFile()"
+            [disabled]="songState.isProcessing()"
+            (fileSelected)="onFileSelected($event)"
+            (fileRemoved)="onFileRemoved()">
+          </app-file-dropzone>
+        } @else {
+          <app-url-input
+            [disabled]="songState.isProcessing()"
+            (youtubeDataLoaded)="onYoutubeDataLoaded($event)">
+          </app-url-input>
+        }
+      </section>
+
+      <!-- Componente 2: Configuración -->
+      <section class="upload-section">
+        <h2 class="upload-section__title">2. Configuración de Pistas (Stems)</h2>
+        <app-track-config-selector
+          [(config)]="trackConfig"
+          [disabled]="songState.isProcessing()">
+        </app-track-config-selector>
+      </section>
+
+      <!-- Footer: Leyenda, Tiempo y Botón -->
+      <footer class="upload-footer">
+        
+        <div class="upload-footer__hint">
+          @if (!hasAtLeastOneTrack()) {
+            <span class="text-amber-400 font-medium">Selecciona al menos un instrumento para continuar.</span>
+          } @else {
+            El metrónomo inteligente y la detección de BPM/Key se generarán automáticamente.
+          }
+        </div>
+
+        <div class="upload-footer__actions">
+          @if (hasAtLeastOneTrack()) {
+            <div class="upload-footer__time-info">
+              <p class="text-sm font-semibold text-white">
+                Tiempo estimado: <span class="text-indigo-400">~{{ estimatedTotalTime() }} min</span>
+              </p>
+              <div class="hidden lg:block">
+                <p class="text-xs text-slate-400 mt-0.5">Procesamiento en la nube</p>
+              </div>
+              <div class="icon-box-md shrink-0">
+                <ion-icon name="time-outline" class="text-xl"></ion-icon>
+              </div>
+            </div>
+          }
+
+          <button
+            type="button"
+            (click)="onSubmit()"
+            [disabled]="!canSubmit()"
+            class="btn-primary shrink-0 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+            [class.btn-youtube]="inputType() === SongInputType.YOUTUBE && canSubmit()">
+            <ion-icon name="sparkles-outline" class="text-lg"></ion-icon>
+            <span>Iniciar Separación</span>
+          </button>
+        </div>
+      </footer>
+
+    } @else {
+      
+      <!-- PANTALLA 2: PANTALLA DE PROGRESO Y COLA -->
+      <app-processing-progress
+        [estimatedTotalTime]="estimatedTotalTime()">
+      </app-processing-progress>
+
+    }
+
+  </div>
+</ion-content>
