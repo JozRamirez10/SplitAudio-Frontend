@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  // TODO: Replace with the base URL of your production server
+  apiUrl: 'https://api.yourdomain.com',
+  defaultUserEmail: 'your-email@yourdomain.com'
 };
