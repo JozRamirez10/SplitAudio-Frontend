@@ -1,0 +1,65 @@
+<div class="config-panel" [class.config-panel--disabled]="disabled()">
+
+  <!-- Instrumentos directos (Bajo y Piano) -->
+  <div class="toggle-grid">
+    @for (toggle of toggleOptions; track toggle.key) {
+      <div
+        (click)="onToggleTrack(toggle.key)"
+        class="toggle-card"
+        [class.toggle-card--active]="config()[toggle.key]">
+        <div>
+          <div class="toggle-card__header">
+            <p class="toggle-card__title">{{ toggle.title }}</p>
+            @if (toggle.estimatedMinutes) {
+              <span class="time-badge">
+                <ion-icon name="time-outline"></ion-icon> +{{ toggle.estimatedMinutes }}m
+              </span>
+            }
+          </div>
+          <p class="toggle-card__subtitle">{{ toggle.subtitle }}</p>
+        </div>
+        <div
+          class="toggle-card__indicator"
+          [class.toggle-card__indicator--checked]="config()[toggle.key]">
+          @if (config()[toggle.key]) { ✓ }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Grupos de modos -->
+  @for (group of modeGroups; track group.key) {
+    <div class="mode-group">
+      <h4 class="mode-group__title">{{ group.title }}</h4>
+      <div class="mode-group__options" [class.mode-group__options--four]="group.fourColumns">
+        @for (opt of group.options; track opt.value) {
+          <button
+            type="button"
+            (click)="onSelectMode(group.key, opt.value)"
+            class="mode-option"
+            [class.mode-option--selected]="config()[group.key] === opt.value"
+            [class.mode-option--maintenance]="isOptionInMaintenance(group.key, opt.value)"
+            [disabled]="isOptionInMaintenance(group.key, opt.value)">
+            
+            <div class="mode-option__header">
+              <span class="mode-option__label">{{ opt.label }}</span>
+              
+              <div class="mode-option__badges">
+                @if (isOptionInMaintenance(group.key, opt.value)) {
+                  <span class="maintenance-badge">En mantenimiento</span>
+                } @else if (opt.estimatedMinutes) {
+                  <span class="time-badge">
+                    <ion-icon name="time-outline"></ion-icon> +{{ opt.estimatedMinutes }}m
+                  </span>
+                }
+              </div>
+            </div>
+            
+            <span class="mode-option__desc">{{ opt.description }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+</div>

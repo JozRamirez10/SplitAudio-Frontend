@@ -1,0 +1,87 @@
+.config-panel {
+  @apply space-y-6;
+
+  &--disabled {
+    @apply opacity-60 pointer-events-none;
+  }
+}
+
+.toggle-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+
+.toggle-card {
+  @apply flex items-center justify-between p-4 rounded-2xl bg-slate-900 border border-slate-800 cursor-pointer select-none transition-all hover:border-slate-700;
+
+  &--active {
+    @apply border-indigo-500/60 bg-indigo-950/20;
+  }
+
+  &__header {
+    @apply flex items-center gap-2;
+  }
+
+  &__title {
+    @apply text-sm font-semibold text-white;
+  }
+
+  &__subtitle {
+    @apply text-xs text-slate-400 mt-0.5;
+  }
+
+  &__indicator {
+    @apply w-5 h-5 rounded-md border border-slate-600 flex items-center justify-center transition-colors;
+
+    &--checked {
+      @apply bg-indigo-600 border-indigo-500 text-white;
+    }
+  }
+}
+
+.mode-group {
+  @apply p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3;
+
+  &__title {
+    @apply text-sm font-semibold text-white;
+  }
+
+  &__options {
+    @apply grid grid-cols-1 sm:grid-cols-3 gap-3;
+
+    &--four {
+      @apply sm:grid-cols-2 lg:grid-cols-4;
+    }
+  }
+}
+
+.mode-option {
+  @apply flex flex-col items-start p-3.5 rounded-xl bg-slate-950/60 border border-slate-800 text-left transition-all cursor-pointer hover:border-slate-700 w-full;
+
+  &--selected {
+    @apply bg-indigo-600/15 border-indigo-500 text-white;
+  }
+
+  &__header {
+    @apply flex items-center justify-between w-full gap-2;
+  }
+
+  &__label {
+    @apply text-xs sm:text-sm font-semibold text-slate-200;
+  }
+
+  &__desc {
+    @apply text-xs text-slate-400 mt-1;
+  }
+
+  &__badges {
+    @apply flex items-center gap-2 shrink-0;
+  }
+}
+
+.time-badge {
+  @apply flex items-center justify-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 shrink-0;
+}
+
+.maintenance-badge {
+  @apply flex items-center justify-center text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0;
+}
