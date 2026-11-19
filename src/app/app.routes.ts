@@ -1,13 +1,20 @@
 import { Routes } from '@angular/router';
+import { GENERAL, PAGES } from './constants/constants';
+import { SongListPage } from './pages/song-list/song-list.page';
+import { SongUploadPage } from './pages/song-upload/song-upload.page';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    path: GENERAL.EMPTY_STRING,
+    redirectTo: PAGES.SONGS,
+    pathMatch: GENERAL.FULL
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    path: PAGES.SONGS,
+    component: SongListPage
   },
+  {
+    path: PAGES.UPLOAD_SONG,
+    component: SongUploadPage
+  }
 ];
