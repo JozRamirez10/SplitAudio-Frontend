@@ -9,6 +9,10 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -35,3 +39,159 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Layout General de Estudio */
+  .studio-content {
+    @apply [--background:#020617] text-slate-100;
+  }
+
+  .studio-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  /* Botones Reutilizables */
+  .btn-primary {
+    @apply flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/20 transition-all;
+  }
+
+  .btn-primary-sm {
+    @apply flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-medium shadow-sm transition-colors;
+  }
+
+  .btn-secondary-sm {
+    @apply flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 text-xs sm:text-sm font-medium border border-slate-700 transition-colors;
+  }
+
+  .btn-icon {
+    @apply p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-colors;
+  }
+
+  .btn-danger-icon {
+    @apply p-2 rounded-xl bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 border border-slate-700 hover:border-rose-500/30 transition-colors;
+  }
+
+  /* Cajas de Íconos */
+  .icon-box-lg {
+    @apply w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400;
+  }
+
+  .icon-box-md {
+    @apply w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0;
+  }
+
+  .icon-box-sm {
+    @apply w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0;
+  }
+
+  /* Badges Musicales */
+  .badge {
+    @apply px-2.5 py-1 rounded-md text-xs font-semibold border;
+  }
+
+  .badge-key {
+    @apply badge bg-emerald-500/10 text-emerald-400 border-emerald-500/20;
+  }
+
+  .badge-bpm {
+    @apply badge bg-amber-500/10 text-amber-400 border-amber-500/20;
+  }
+
+  .badge-hz {
+    @apply badge bg-sky-500/10 text-sky-400 border-sky-500/20;
+  }
+
+  /* Alertas */
+  .alert-error {
+    @apply mt-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm;
+  }
+}
+
+/* =========================================
+   Toasts Personalizados (Premium Aesthetic)
+   ========================================= */
+ion-toast.custom-toast {
+  --border-radius: 12px;
+  --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --border-width: 1px;
+  --border-style: solid;
+  
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 0.9rem;
+
+  /* Forzamos las variables base para el Toast normal (primary/default) */
+  --background: #1e293b !important;
+  --border-color: #334155 !important;
+  --color: #ffffff !important;
+  --icon-color: #ffffff !important;
+  --button-color: #94a3b8 !important;
+
+  /* Forzamos las variables para el estado ERROR (danger) */
+  &.ion-color-danger {
+    --background: #450a0a !important;
+    --border-color: #ef444455 !important;
+    --color: #fecaca !important;
+    --icon-color: #fecaca !important;
+  }
+
+  /* Forzamos las variables para el estado ÉXITO (success) */
+  &.ion-color-success {
+    --background: #052e16 !important;
+    --border-color: #22c55e55 !important;
+    --color: #bbf7d0 !important;
+    --icon-color: #bbf7d0 !important;
+  }
+}
+
+/* =========================================
+   Alertas Personalizadas (Premium Aesthetic)
+   ========================================= */
+ion-alert.custom-alert {
+  /* Fondo oscuro de la tarjeta */
+  --background: #1e293b; 
+  /* Oscurece más el fondo trasero para resaltar la alerta */
+  --backdrop-opacity: 0.7; 
+
+  /* Redondeamos las esquinas de la tarjeta */
+  .alert-wrapper {
+    border-radius: 16px;
+    border: 1px solid #334155;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Título */
+  .alert-title {
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  /* Mensaje */
+  .alert-message {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* Contenedor de los botones */
+  .alert-button-group {
+    border-top: 1px solid #334155;
+  }
+
+  /* Estilos para el botón Cancelar (Gris sutil) */
+  .alert-btn-cancel {
+    color: #94a3b8 !important;
+    font-weight: 500;
+  }
+
+  /* Estilos para el botón Confirmar / Eliminar (Rojo agresivo) */
+  .alert-btn-danger {
+    color: #ef4444 !important;
+    font-weight: 700;
+  }
+}
