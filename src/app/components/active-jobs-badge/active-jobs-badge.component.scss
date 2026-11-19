@@ -1,0 +1,67 @@
+/* Base del componente */
+:host {
+  @apply fixed z-[100] block pointer-events-none;
+}
+
+/* Modificador: Esquina inferior (Para song-list) */
+:host(.position-bottom) {
+  @apply bottom-8 right-6 md:bottom-10 md:right-10;
+}
+
+/* Modificador: Esquina superior (Para song-upload) */
+:host(.position-top) {
+  /* top-6 para pantallas chicas, top-8 en desktop. Se alinea perfecto a la derecha del título */
+  @apply top-6 right-6 md:top-8 md:right-8; 
+}
+
+/* Respeta la clase hidden de Tailwind */
+:host(.hidden) {
+  display: none !important;
+}
+
+.premium-monitor {
+  @apply flex items-center gap-3.5 pl-3 pr-5 py-2.5 rounded-2xl pointer-events-auto;
+  /* Fondo cristalino oscuro con borde ámbar sutil */
+  @apply bg-slate-900/90 backdrop-blur-lg border border-amber-500/20;
+  /* Sombra flotante cálida */
+  @apply shadow-[0_8px_30px_rgb(0,0,0,0.5)] shadow-amber-500/10;
+  /* Interacción suave */
+  @apply transform transition-all duration-300 hover:scale-105 hover:bg-slate-800/95 cursor-default;
+
+  &__status-dot {
+    @apply relative flex items-center justify-center w-2 h-2 ml-1;
+
+    .ping {
+      @apply absolute inline-flex w-full h-full rounded-full bg-amber-400 opacity-75 animate-ping;
+    }
+    .dot {
+      @apply relative inline-flex rounded-full w-2 h-2 bg-amber-500;
+    }
+  }
+
+  &__icon-wrapper {
+    @apply flex items-center justify-center p-1.5 rounded-full bg-amber-500/10 text-amber-400;
+    
+    .spin-icon {
+      @apply text-xl;
+      animation: spin 3s linear infinite;
+    }
+  }
+
+  &__info {
+    @apply flex flex-col justify-center mt-0.5;
+
+    .title {
+      @apply text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5;
+    }
+    .count {
+      @apply text-sm font-semibold text-amber-400 leading-none tracking-wide;
+    }
+  }
+}
+
+/* Animación personalizada ultra suave para el ícono */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

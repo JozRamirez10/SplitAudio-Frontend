@@ -1,0 +1,22 @@
+@if (activeJobs() > 0) {
+  <div class="premium-monitor" title="Hay trabajos procesándose en la nube">
+    
+    <!-- Punto parpadeante de estado -->
+    <div class="premium-monitor__status-dot">
+      <span class="ping"></span>
+      <span class="dot"></span>
+    </div>
+    
+    <!-- Ícono rotatorio -->
+    <div class="premium-monitor__icon-wrapper">
+      <ion-icon name="sync-outline" class="spin-icon"></ion-icon>
+    </div>
+
+    <!-- Texto descriptivo -->
+    <div class="premium-monitor__info">
+      <span class="title">Nube Activa</span>
+      <span class="count">{{ activeJobs() }} {{ activeJobs() === 1 ? 'pista en cola' : 'pistas en cola' }}</span>
+    </div>
+
+  </div>
+}
