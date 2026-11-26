@@ -1,0 +1,47 @@
+.transport-bar {
+  @apply bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-4 py-3.5;
+
+  &__inner {
+    @apply max-w-5xl mx-auto flex flex-col gap-3;
+  }
+
+  &__timeline {
+    @apply flex items-center gap-3;
+  }
+
+  &__time {
+    @apply text-xs font-mono text-slate-300 w-11 shrink-0;
+  }
+
+  &__slider-wrap {
+    @apply relative flex-1 flex items-center h-5;
+  }
+
+  &__track-bg {
+    @apply w-full h-1.5 rounded-full bg-slate-700 overflow-hidden pointer-events-none;
+  }
+
+  &__track-fill {
+    @apply h-full bg-indigo-500 rounded-full;
+  }
+
+  &__range {
+    @apply absolute inset-0 w-full h-full opacity-0 hover:opacity-100 cursor-pointer accent-indigo-400;
+
+    &:disabled {
+      @apply cursor-not-allowed;
+    }
+  }
+
+  &__actions {
+    @apply flex items-center justify-center gap-3;
+  }
+
+  &__btn-secondary {
+    @apply flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors;
+  }
+
+  &__btn-play {
+    @apply w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed transition-all;
+  }
+}

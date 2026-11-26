@@ -1,0 +1,77 @@
+<div class="transport-bar">
+  <div class="transport-bar__inner">
+
+    <div class="transport-bar__timeline">
+      <span class="transport-bar__time">{{ formattedCurrentTime() }}</span>
+
+      <div class="transport-bar__slider-wrap">
+        <div class="transport-bar__track-bg">
+          <div
+            class="transport-bar__track-fill"
+            [style.width.%]="progressPercent()">
+          </div>
+        </div>
+
+        <input
+          type="range"
+          min="0"
+          [max]="duration() || 0"
+          step="0.05"
+          [value]="displayedTime()"
+          [disabled]="disabled()"
+          (input)="onSeekInput($event)"
+          (change)="onSeekCommit($event)"
+          (pointercancel)="onSeekCancel()"
+          class="transport-bar__range"
+          aria-label="Posición de reproducción" />
+      </div>
+
+      <span class="transport-bar__time text-right">{{ formattedDuration() }}</span>
+    </div>
+
+    <div class="transport-bar__actions">
+      <button
+        type="button"
+        [disabled]="disabled()"
+        (click)="restart.emit()"
+        class="transport-bar__btn-secondary"
+        title="Volver al inicio (00:00)">
+        <ion-icon name="play-skip-back-outline" class="text-xl"></ion-icon>
+      </button>
+
+      <button
+        type="button"
+        [disabled]="disabled()"
+        (click)="skip.emit(-5)"
+        class="transport-bar__btn-secondary"
+        title="Retroceder 5 segundos">
+        <ion-icon name="play-back-outline" class="text-xl"></ion-icon>
+        <span class="text-[10px] font-mono">-5s</span>
+      </button>
+
+      <button
+        type="button"
+        [disabled]="disabled()"
+        (click)="togglePlay.emit()"
+        class="transport-bar__btn-play"
+        [title]="isPlaying() ? 'Pausar (Espacio)' : 'Reproducir (Espacio)'">
+        <ion-icon
+          [name]="isPlaying() ? 'pause' : 'play'"
+          class="text-2xl"
+          [class.translate-x-0.5]="!isPlaying()">
+        </ion-icon>
+      </button>
+
+      <button
+        type="button"
+        [disabled]="disabled()"
+        (click)="skip.emit(5)"
+        class="transport-bar__btn-secondary"
+        title="Adelantar 5 segundos">
+        <ion-icon name="play-forward-outline" class="text-xl"></ion-icon>
+        <span class="text-[10px] font-mono">+5s</span>
+      </button>
+    </div>
+
+  </div>
+</div>
