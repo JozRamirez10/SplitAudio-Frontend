@@ -3,13 +3,13 @@ import { SpinnerTypes } from "@ionic/angular";
 export const APP = {
     RETRY: 2,
     APP_JSON: 'application/json',
-    BLOB: 'blob',
     ALLOWED_EXTENSIONS: ['.mp3', '.wav', '.flac', '.m4a', '.ogg'] as readonly string[],
     MAX_FILE_SIZE_MB: 200,
     BASE_PROCESSING_MINUTES: 2,
     YOUTUBE_REGEX: /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/ ,
     NOEMBED_URL: 'https://noembed.com/embed?url=',
     GROUP_MAINTENANCE: [] as readonly string[],
+    AUDIO_CACHE_NAME: 'splitaudio-previews'
 } as const;
 
 export const GENERAL = {
@@ -29,11 +29,13 @@ export const API_ROUTES = {
     SPLIT_YOUTUBE: "/split-youtube/job",
     JOB_BY_ID: "/jobs/status",
     ACTIVE_JOBS: "/jobs/active",
+    DOWNLOAD_ZIP: "/download-zip"
 } as const;
 
 export const PAGES = {
     SONGS: 'songs',
     UPLOAD_SONG: 'upload',
+    DAW: 'daw'
 } as const
 
 export const MESSAGE_LOADING = {
@@ -51,9 +53,7 @@ export const MESSAGE_ERROR = {
     LOAD_SONGS: 'Ha ocurrido un error al cargas las canciones. Refresca la página.',
     PROCESS_SONG: 'Ocurrió un error al procesar la canción. ' +
         'Vuelva a intentarlo o póngase en contacto con el administrador.',
-    DELETE_SONG: 'Error al eliminar la canción.',
-    DOWNLOAD_TRACK: 'Error al descargar la pista: ',
-    DOWNLOAD_SONG_ZIP: 'Error al comprimir el zip de ',
+    DELETE_SONG: 'Error al eliminar la canción.'
 } as const;
 
 export const APP_UI = {
