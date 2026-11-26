@@ -1,0 +1,31 @@
+.daw-header {
+  @apply flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-800;
+
+  &__left {
+    @apply flex items-start sm:items-center gap-3 min-w-0;
+  }
+
+  &__meta {
+    @apply flex flex-col gap-2 min-w-0;
+  }
+
+  &__title-row {
+    @apply flex items-center gap-2.5 min-w-0;
+  }
+
+  &__title {
+    @apply text-lg sm:text-2xl font-bold text-white truncate;
+  }
+
+  &__badges {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
+  &__count {
+    @apply text-xs text-slate-400 ml-1;
+  }
+
+  &__actions {
+    @apply flex items-center gap-2 shrink-0;
+  }
+}

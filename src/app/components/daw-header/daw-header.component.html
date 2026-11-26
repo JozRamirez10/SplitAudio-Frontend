@@ -1,0 +1,39 @@
+<header class="daw-header">
+  <div class="daw-header__left">
+    <button
+      type="button"
+      (click)="back.emit()"
+      class="btn-icon"
+      title="Volver a la biblioteca">
+      <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+    </button>
+
+    <div class="daw-header__meta">
+      <div class="daw-header__title-row">
+        <div class="icon-box-sm hidden sm:flex">
+          <ion-icon name="musical-notes-outline" class="text-lg"></ion-icon>
+        </div>
+        <h1 class="daw-header__title" [title]="displayTitle()">
+          {{ displayTitle() }}
+        </h1>
+      </div>
+
+      <div class="daw-header__badges">
+        <span class="badge-key">Key: {{ song().musicalKey }}</span>
+        <span class="badge-bpm">{{ song().bpm }} BPM</span>
+        <span class="badge-hz">{{ song().tuningHz }} Hz</span>
+        <span class="daw-header__count">{{ trackCount() }} pistas activas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="daw-header__actions">
+    <button
+      type="button"
+      (click)="downloadZip.emit()"
+      class="btn-secondary-sm">
+      <ion-icon name="archive-outline" class="text-base text-indigo-400"></ion-icon>
+      <span>Descargar ZIP</span>
+    </button>
+  </div>
+</header>
