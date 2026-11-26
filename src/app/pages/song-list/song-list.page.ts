@@ -6,7 +6,6 @@ import { addCircleOutline, alertCircleOutline, cloudUploadOutline, musicalNotesO
 import { ActiveJobsBadgeComponent } from '../../components/active-jobs-badge/active-jobs-badge.component';
 import { SongAccordionItemComponent } from '../../components/song-accordion-item/song-accordion-item.component';
 import { PAGES } from '../../constants/constants';
-import { Song } from '../../models/dtos/song.model';
 import { SongTrack } from '../../models/dtos/song.track.model';
 import { ModalService } from '../../services/modal.service';
 import { SongState } from '../../states/song.state';
@@ -43,12 +42,12 @@ export class SongListPage implements OnInit {
     this.songState.loadSongs(true);
   }
 
-  onDownloadTrack(event: { songName: string; track: SongTrack }): void {
-    this.songState.downloadTrack(event.songName, event.track);
+  onDownloadTrack(track: SongTrack): void {
+    this.songState.downloadTrack(track);
   }
 
-  onDownloadZip(song: Song): void {
-    this.songState.downloadSongZip(song);
+  onDownloadZip(songId: string): void {
+    this.songState.downloadSongZip(songId);
   }
 
   async onDeleteSong(songId: string): Promise<void> {
