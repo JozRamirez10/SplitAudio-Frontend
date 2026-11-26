@@ -4,7 +4,7 @@
 
     <div class="accordion-card__info">
       <div class="icon-box-md">
-        <ion-icon name="musical-notes-outline" class="text-xl"></ion-icon>
+        <ion-icon name="musical-note-outline" class="text-xl"></ion-icon>
       </div>
 
       <div class="min-w-0 mr-2">
@@ -27,35 +27,38 @@
         
         <button
           type="button"
-          [disabled]="isDownloadingZip()"
           (click)="onDownloadZip()"
           class="btn-secondary-sm">
-          @if (isDownloadingZip()) {
-            <ion-spinner name="crescent" class="w-4 h-4 text-indigo-400"></ion-spinner>
-            <span>Empaquetando...</span>
-          } @else {
-            <ion-icon name="archive-outline" class="text-base text-indigo-400"></ion-icon>
-            <span>Descargar ZIP</span>
-          }
+          <ion-icon name="archive-outline" class="text-base text-indigo-400"></ion-icon>
+          <span>Descargar ZIP</span>
         </button>
 
         <!-- Bloque del Tooltip Refactorizado -->
-        <div class="accordion-card__tooltip-wrapper">
-          
-          <div class="accordion-card__tooltip-bubble">
-            Próximamente: Mezcladora multipista
-            <div class="accordion-card__tooltip-arrow"></div>
-          </div>
 
+        @if (hasAudioPreviews()) {
           <button 
             type="button" 
-            class="btn-primary-sm accordion-card__btn-disabled"
-            (click)="$event.preventDefault()">
+            (click)="onOpenDaw()"
+            class="btn-primary-sm">
             <ion-icon name="options-outline" class="text-base"></ion-icon>
             <span>Abrir DAW</span>
           </button>
-
-        </div>
+        } @else {
+          <div class="accordion-card__tooltip-wrapper">
+            <div class="accordion-card__tooltip-bubble">
+              Esta canción no cuenta con pistas de vista previsa
+              <div class="accordion-card__tooltip-arrow"></div>
+            </div>
+  
+            <button 
+              type="button" 
+              (click)="onOpenDaw()"
+              class="btn-primary-sm accordion-card__btn-disabled">
+              <ion-icon name="options-outline" class="text-base"></ion-icon>
+              <span>Abrir DAW</span>
+            </button>
+          </div>
+        }
 
         <button
           type="button"
