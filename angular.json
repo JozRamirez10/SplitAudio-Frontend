@@ -35,10 +35,7 @@
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
             "scripts": [],
-            "browser": "src/main.ts",
-            "allowedCommonJsDependencies": [
-              "jszip"
-            ]
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
