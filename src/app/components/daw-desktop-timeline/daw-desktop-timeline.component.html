@@ -1,0 +1,155 @@
+<section class="studio-daw">
+
+  <!-- Columna izquierda fija: Controles de pista -->
+  <div class="studio-daw__controls-col">
+    <div class="studio-daw__corner-header">
+      <span>Pistas ({{ tracks().length }})</span>
+      <span class="text-[11px] text-slate-500">Mezclador</span>
+    </div>
+
+    @for (item of tracks(); track item.track.id) {
+      @let theme = getTrackTheme(item.track.trackType);
+      @let silent = isTrackSilent(item);
+
+      <div
+        class="studio-daw__track-panel"
+        [class.studio-daw__track-panel--silent]="silent"
+        [style.border-left-color]="theme.accentHex">
+
+        <div class="studio-daw__track-top">
+          <div class="studio-daw__track-identity">
+            <div
+              class="studio-daw__track-icon"
+              [style.background-color]="theme.iconBg"
+              [style.color]="theme.accentHex">
+              <ion-icon [name]="getTrackIcon(item.track.trackType)" class="text-base"></ion-icon>
+            </div>
+            <div class="min-w-0">
+              <p class="studio-daw__track-name" [title]="getTrackLabel(item.track.trackType)">
+                {{ getTrackLabel(item.track.trackType) }}
+              </p>
+              <span class="studio-daw__track-type">{{ item.track.trackType }}</span>
+            </div>
+          </div>
+
+          <div class="studio-daw__mini-actions">
+            <button
+              type="button"
+              (click)="toggleMute.emit(item.track.id)"
+              class="studio-daw__btn-ms"
+              [class.studio-daw__btn-ms--mute]="item.isMuted"
+              title="Silenciar (Mute)">
+              M
+            </button>
+
+            <button
+              type="button"
+              (click)="toggleSolo.emit(item.track.id)"
+              class="studio-daw__btn-ms"
+              [class.studio-daw__btn-ms--solo]="item.isSolo"
+              title="Aislar (Solo)">
+              S
+            </button>
+
+            <button
+              type="button"
+              (click)="downloadTrack.emit(item.track)"
+              class="studio-daw__btn-dl"
+              title="Descargar WAV">
+              <ion-icon name="download-outline" class="text-sm"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="studio-daw__fader-row">
+          <ion-icon
+            [name]="silent ? 'volume-mute-outline' : 'volume-high-outline'"
+            class="text-sm text-slate-400 shrink-0">
+          </ion-icon>
+
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            [value]="item.volume"
+            (input)="onVolumeInput(item.track.id, $event)"
+            [style.accent-color]="theme.accentHex"
+            class="studio-daw__slider"
+            [attr.aria-label]="'Volumen de ' + getTrackLabel(item.track.trackType)" />
+
+          <span class="studio-daw__percent">{{ (item.volume * 100).toFixed(0) }}%</span>
+        </div>
+
+      </div>
+    }
+  </div>
+
+  <!-- Columna derecha flexible: Regla de tiempo + Ondas + Playhead -->
+  <div
+    #timelineArea
+    class="studio-daw__timeline-col"
+    (pointerdown)="onTimelinePointerDown($event)"
+    (pointermove)="onTimelinePointerMove($event)"
+    (pointerup)="onTimelinePointerUp($event)"
+    (pointercancel)="onTimelinePointerCancel()"
+    (pointerleave)="onTimelinePointerLeave()">
+
+    <!-- Regla de tiempo -->
+    <div class="studio-daw__ruler">
+      @for (tick of rulerTicks(); track tick.label) {
+        <div class="studio-daw__tick" [style.left.%]="tick.percent">
+          <span class="studio-daw__tick-label">{{ tick.label }}</span>
+          <div class="studio-daw__tick-mark"></div>
+        </div>
+      }
+    </div>
+
+    <!-- Carriles de ondas -->
+    <div class="studio-daw__lanes">
+      <!-- Líneas verticales de guía alineadas con la regla -->
+      @for (tick of rulerTicks(); track tick.label) {
+        <div class="studio-daw__grid-line" [style.left.%]="tick.percent"></div>
+      }
+
+      @for (item of tracks(); track item.track.id) {
+        @let theme = getTrackTheme(item.track.trackType);
+        @let silent = isTrackSilent(item);
+
+        <div
+          class="studio-daw__lane"
+          [class.studio-daw__lane--silent]="silent">
+          <app-daw-waveform-canvas
+            [peaks]="item.peaks"
+            [color]="theme.waveHex"
+            [isSilent]="silent">
+          </app-daw-waveform-canvas>
+        </div>
+      }
+    </div>
+
+    <!-- Línea guía sutil al pasar el mouse -->
+    @if (hoverPercent() !== null && !isScrubbing()) {
+      <div
+        class="studio-daw__hover-cursor"
+        [style.left.%]="hoverPercent()">
+      </div>
+    }
+
+    <!-- Cursor principal (Playhead) -->
+    <div
+      class="studio-daw__playhead"
+      [class.studio-daw__playhead--scrubbing]="isScrubbing()"
+      [style.left.%]="playheadPercent()">
+
+      <div class="studio-daw__playhead-head">
+        @if (isScrubbing()) {
+          <span class="studio-daw__scrub-badge">{{ formattedActiveTime() }}</span>
+        }
+      </div>
+      <div class="studio-daw__playhead-line"></div>
+    </div>
+
+  </div>
+
+</section>

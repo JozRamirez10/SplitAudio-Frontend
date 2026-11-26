@@ -1,0 +1,150 @@
+.studio-daw {
+  @apply flex w-full rounded-2xl border border-slate-800 bg-slate-900/80 overflow-hidden shadow-2xl;
+
+  &__controls-col {
+    @apply w-72 xl:w-80 shrink-0 border-r border-slate-800 bg-slate-900/95;
+  }
+
+  &__corner-header {
+    @apply h-9 px-4 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400 border-b border-slate-800 bg-slate-950/60;
+  }
+
+  &__track-panel {
+    @apply h-[86px] px-3.5 py-2.5 flex flex-col justify-between border-b border-slate-800/90 border-l-4 transition-opacity duration-150 bg-slate-900/60 hover:bg-slate-800/60;
+
+    &:last-child {
+      @apply border-b-0;
+    }
+
+    &--silent {
+      @apply opacity-50;
+    }
+  }
+
+  &__track-top {
+    @apply flex items-center justify-between gap-2;
+  }
+
+  &__track-identity {
+    @apply flex items-center gap-2.5 min-w-0;
+  }
+
+  &__track-icon {
+    @apply w-8 h-8 rounded-lg flex items-center justify-center shrink-0;
+  }
+
+  &__track-name {
+    @apply text-xs font-semibold text-slate-100 truncate leading-tight;
+  }
+
+  &__track-type {
+    @apply block text-[10px] text-slate-400 uppercase tracking-wider truncate;
+  }
+
+  &__mini-actions {
+    @apply flex items-center gap-1 shrink-0;
+  }
+
+  &__btn-ms {
+    @apply w-7 h-7 rounded-md text-[11px] font-bold border border-slate-700 bg-slate-950/70 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors;
+
+    &--mute {
+      @apply bg-rose-500/25 border-rose-500 text-rose-300 hover:bg-rose-500/35;
+    }
+
+    &--solo {
+      @apply bg-amber-500/25 border-amber-400 text-amber-300 hover:bg-amber-500/35;
+    }
+  }
+
+  &__btn-dl {
+    @apply w-7 h-7 rounded-md flex items-center justify-center bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white transition-colors;
+  }
+
+  &__fader-row {
+    @apply flex items-center gap-2;
+  }
+
+  &__slider {
+    @apply w-full h-1 rounded-lg bg-slate-700 cursor-pointer;
+  }
+
+  &__percent {
+    @apply text-[11px] font-mono text-slate-400 w-8 text-right shrink-0;
+  }
+
+  // --- Columna derecha (Timeline + Ondas) ---
+  &__timeline-col {
+    @apply relative flex-1 min-w-0 select-none touch-none cursor-ew-resize bg-slate-950/60;
+  }
+
+  &__ruler {
+    @apply relative h-9 border-b border-slate-800 bg-slate-950/80 overflow-hidden;
+  }
+
+  &__tick {
+    @apply absolute top-0 bottom-0 flex flex-col justify-between pointer-events-none;
+  }
+
+  &__tick-label {
+    @apply text-[10px] font-mono text-slate-400 pl-1.5 pt-1 leading-none;
+  }
+
+  &__tick-mark {
+    @apply w-px h-2 bg-slate-700;
+  }
+
+  &__lanes {
+    @apply relative;
+  }
+
+  &__grid-line {
+    @apply absolute inset-y-0 w-px bg-slate-800/50 pointer-events-none;
+  }
+
+  &__lane {
+    @apply relative h-[86px] border-b border-slate-800/80 transition-opacity duration-150;
+
+    &:nth-child(even) {
+      @apply bg-slate-900/25;
+    }
+
+    &:last-child {
+      @apply border-b-0;
+    }
+
+    &--silent {
+      @apply opacity-45;
+    }
+  }
+
+  &__hover-cursor {
+    @apply absolute inset-y-0 w-px bg-slate-400/35 pointer-events-none z-10;
+  }
+
+  &__playhead {
+    @apply absolute inset-y-0 -translate-x-1/2 pointer-events-none z-20 flex flex-col items-center;
+
+    &--scrubbing {
+      .studio-daw__playhead-line {
+        @apply bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.75)];
+      }
+
+      .studio-daw__playhead-head {
+        @apply border-t-amber-400;
+      }
+    }
+  }
+
+  &__playhead-head {
+    @apply relative w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[9px] border-t-indigo-400 mt-1;
+  }
+
+  &__scrub-badge {
+    @apply absolute -top-0.5 left-3 px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 text-[10px] font-mono font-bold shadow-md whitespace-nowrap;
+  }
+
+  &__playhead-line {
+    @apply w-[2px] flex-1 bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.65)];
+  }
+}
