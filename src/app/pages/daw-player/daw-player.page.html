@@ -1,0 +1,105 @@
+<ion-content class="studio-content">
+  <div class="studio-container daw-page">
+
+    @if (isFetchingSong()) {
+      <div class="loading-state">
+        <ion-spinner name="crescent" class="w-10 h-10 text-indigo-500"></ion-spinner>
+        <p class="text-slate-400 text-sm">Obteniendo información de la canción...</p>
+      </div>
+    } @else if (songError()) {
+      <div class="daw-error">
+        <ion-icon name="alert-circle-outline" class="text-4xl text-rose-400"></ion-icon>
+        <p class="text-slate-200 font-medium">{{ songError() }}</p>
+        <div class="flex items-center gap-3 mt-2">
+          <button type="button" (click)="goBack()" class="btn-secondary-sm">
+            <ion-icon name="arrow-back-outline" class="text-base"></ion-icon>
+            <span>Volver</span>
+          </button>
+          <button type="button" (click)="onRetry()" class="btn-primary-sm">
+            <ion-icon name="refresh-outline" class="text-base"></ion-icon>
+            <span>Reintentar</span>
+          </button>
+        </div>
+      </div>
+    } @else if (song(); as currentSong) {
+
+      <app-daw-header
+        [song]="currentSong"
+        [trackCount]="audioEngine.tracks().length"
+        (back)="goBack()"
+        (downloadZip)="onDownloadZip()">
+      </app-daw-header>
+
+      @if (audioEngine.isLoading()) {
+        <div class="daw-loading-card">
+          <ion-spinner name="crescent" class="w-10 h-10 text-indigo-500"></ion-spinner>
+          <p class="text-slate-200 font-medium mt-3">
+            Cargando y decodificando pistas de audio...
+          </p>
+          <p class="text-slate-400 text-xs mt-1">
+            {{ audioEngine.loadedTracksCount() }} de {{ audioEngine.totalTracksCount() }} pistas ({{ audioEngine.loadProgress() }}%)
+          </p>
+
+          <div class="daw-loading-card__bar">
+            <div
+              class="daw-loading-card__fill"
+              [style.width.%]="audioEngine.loadProgress()">
+            </div>
+          </div>
+        </div>
+      } @else if (audioEngine.loadError()) {
+        <div class="daw-error">
+          <ion-icon name="alert-circle-outline" class="text-4xl text-rose-400"></ion-icon>
+          <p class="text-slate-200 font-medium">{{ audioEngine.loadError() }}</p>
+          <button type="button" (click)="onRetry()" class="btn-primary-sm mt-2">
+            <ion-icon name="refresh-outline" class="text-base"></ion-icon>
+            <span>Reintentar carga</span>
+          </button>
+        </div>
+      } @else {
+        @if (isDesktop()) {
+          <app-daw-desktop-timeline
+            [tracks]="audioEngine.tracks()"
+            [hasAnySolo]="audioEngine.hasAnySolo()"
+            [currentTime]="audioEngine.currentTime()"
+            [duration]="audioEngine.duration()"
+            (volumeChange)="audioEngine.setTrackVolume($event.trackId, $event.volume)"
+            (toggleMute)="audioEngine.toggleMute($event)"
+            (toggleSolo)="audioEngine.toggleSolo($event)"
+            (downloadTrack)="onDownloadTrack($event)"
+            (seek)="audioEngine.seek($event)">
+          </app-daw-desktop-timeline>
+        } @else {
+          <section class="daw-mixer">
+            @for (trackState of audioEngine.tracks(); track trackState.track.id) {
+              <app-daw-track-row
+                [trackState]="trackState"
+                [hasAnySolo]="audioEngine.hasAnySolo()"
+                (volumeChange)="audioEngine.setTrackVolume(trackState.track.id, $event)"
+                (toggleMute)="audioEngine.toggleMute(trackState.track.id)"
+                (toggleSolo)="audioEngine.toggleSolo(trackState.track.id)"
+                (download)="onDownloadTrack($event)">
+              </app-daw-track-row>
+            }
+          </section>
+        }
+      }
+    }
+
+  </div>
+</ion-content>
+
+@if (song() && !songError()) {
+  <ion-footer class="ion-no-border">
+    <app-daw-transport-bar
+      [isPlaying]="audioEngine.isPlaying()"
+      [currentTime]="audioEngine.currentTime()"
+      [duration]="audioEngine.duration()"
+      [disabled]="audioEngine.isLoading() || audioEngine.tracks().length === 0"
+      (togglePlay)="audioEngine.togglePlayPause()"
+      (seek)="audioEngine.seek($event)"
+      (skip)="audioEngine.skip($event)"
+      (restart)="audioEngine.restart()">
+    </app-daw-transport-bar>
+  </ion-footer>
+}

@@ -1,0 +1,27 @@
+.daw-page {
+  @apply pb-8;
+
+  &--desktop {
+    @apply max-w-none w-full px-6 xl:px-8;
+  }
+}
+
+.daw-mixer {
+  @apply flex flex-col gap-3;
+}
+
+.daw-loading-card {
+  @apply flex flex-col items-center justify-center py-14 px-6 bg-slate-800/50 border border-slate-700/60 rounded-2xl text-center;
+
+  &__bar {
+    @apply w-full max-w-md h-2 bg-slate-700 rounded-full overflow-hidden mt-4;
+  }
+
+  &__fill {
+    @apply h-full bg-indigo-500 transition-all duration-200 rounded-full;
+  }
+}
+
+.daw-error {
+  @apply flex flex-col items-center justify-center gap-2 py-14 px-6 bg-slate-800/50 border border-rose-500/30 rounded-2xl text-center;
+}
