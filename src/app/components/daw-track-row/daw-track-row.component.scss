@@ -1,0 +1,67 @@
+.daw-track {
+  @apply flex flex-col md:flex-row md:items-center justify-between gap-3 px-4 py-3.5 bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 rounded-xl transition-all duration-150;
+
+  &--silent {
+    @apply opacity-55 border-slate-800;
+  }
+
+  &--metronome {
+    @apply border-emerald-500/25 bg-slate-800/80;
+  }
+
+  &__identity {
+    @apply flex items-center gap-3 min-w-0 md:w-56 shrink-0;
+  }
+
+  &__icon {
+    @apply w-10 h-10 rounded-lg bg-indigo-500/15 text-indigo-400 flex items-center justify-center shrink-0;
+
+    &--metronome {
+      @apply bg-emerald-500/15 text-emerald-400;
+    }
+  }
+
+  &__name {
+    @apply text-sm font-semibold text-slate-100 truncate;
+  }
+
+  &__type {
+    @apply text-xs text-slate-400 uppercase tracking-wider;
+  }
+
+  &__controls {
+    @apply flex items-center gap-3 flex-1 justify-end;
+  }
+
+  &__buttons {
+    @apply flex items-center gap-1.5 shrink-0;
+  }
+
+  &__btn-control {
+    @apply w-9 h-9 rounded-lg text-xs font-bold border border-slate-600/80 bg-slate-900/70 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors;
+
+    &--mute-active {
+      @apply bg-rose-500/25 border-rose-500 text-rose-300 hover:bg-rose-500/35;
+    }
+
+    &--solo-active {
+      @apply bg-amber-500/25 border-amber-400 text-amber-300 hover:bg-amber-500/35;
+    }
+  }
+
+  &__fader {
+    @apply flex items-center gap-2.5 flex-1 max-w-xs;
+  }
+
+  &__slider {
+    @apply w-full h-1.5 rounded-lg appearance-none bg-slate-700 accent-indigo-500 cursor-pointer;
+  }
+
+  &__percent {
+    @apply text-xs font-mono text-slate-400 w-9 text-right shrink-0;
+  }
+
+  &__download {
+    @apply flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-700/70 hover:bg-indigo-600 text-slate-200 hover:text-white text-xs font-medium transition-colors shrink-0;
+  }
+}
