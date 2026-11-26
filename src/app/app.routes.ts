@@ -16,5 +16,10 @@ export const routes: Routes = [
   {
     path: PAGES.UPLOAD_SONG,
     component: SongUploadPage
+  },
+  {
+    path: `${PAGES.DAW}/:id`,
+    loadComponent: () => 
+      import('./pages/daw-player/daw-player.page').then(m => m.DawPlayerPage)
   }
 ];
