@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { catchError, filter, finalize, from, Observable, of, retry, switchMap, take, tap, throwError, timer } from "rxjs";
+import { catchError, filter, finalize, Observable, of, retry, switchMap, take, tap, throwError, timer } from "rxjs";
 import { environment } from "../../environments/environment";
 import { APP, MESSAGE_ERROR } from "../constants/constants";
 import { JobStatus } from "../enums/job.status.enum";
@@ -8,6 +8,7 @@ import { ModalActions } from "../enums/modal.actions.enum";
 import { JobStatusResponse, JobSubmissionResponse, OrchestratorRequest, OrchestratorResponse } from "../models/dtos/orchestrator.model";
 import { Song } from "../models/dtos/song.model";
 import { SongTrack } from "../models/dtos/song.track.model";
+import { AudioCacheService } from "../services/audio-cache.service";
 import { DownloadService } from "../services/download.service";
 import { ModalService } from "../services/modal.service";
 import { OrchestratorService } from "../services/orchestrator.service";
@@ -22,12 +23,12 @@ export class SongState {
     private readonly orchestratorService = inject(OrchestratorService);
     private readonly downloadService = inject(DownloadService);
     private readonly modalService = inject(ModalService);
+    private readonly audioCacheService = inject(AudioCacheService);
 
     public readonly currentUserEmail = signal<string>(environment.defaultUserEmail);
     public readonly songs = signal<Song[]>([]);
     public readonly isLoading = signal<boolean>(false);
     public readonly isProcessing = signal<boolean>(false);
-    public readonly downloadingSongId = signal<string | null> (null);
     public readonly errorMessage = signal<string | null>(null);
 
     public readonly totalSongs = computed(() => this.songs().length);
@@ -121,33 +122,22 @@ export class SongState {
         this.songService.deleteSong(songId).pipe(
             finalize(() => this.isLoading.set(false))
         ).subscribe({
-            next: () => {
+            next: async () => {
                 this.songs.update(currentSongs => currentSongs.filter(s => s.id !== songId));
+                await this.audioCacheService.clearSongCache(songId);
                 this.modalService.showModal(ModalActions.DELETE_SUCCESS);
             },
-            error: (err: HttpErrorResponse) => {
+            error: async (err: HttpErrorResponse) => {
                 this.modalService.showModal(ModalActions.ERROR_DELETE);
             }
         });
     }
 
-    downloadTrack(songName: string, track: SongTrack): void {
-        from(this.downloadService.downloadSingleTrack(songName, track)).subscribe({
-            error: () => this.modalService.showModal(
-                ModalActions.CUSTOM, `${MESSAGE_ERROR.DOWNLOAD_TRACK} ${track.trackType}` 
-            )
-        });
+    downloadTrack(track: SongTrack): void {
+        this.downloadService.downloadSingleTrack(track);
     }
 
-    downloadSongZip(song: Song): void {
-        this.downloadingSongId.set(song.id);
-
-        from(this.downloadService.downloadAllTracksAsZip(song)).pipe(
-            finalize(() => this.downloadingSongId.set(null))
-        ).subscribe({
-            error: () => this.modalService.showModal(
-                ModalActions.CUSTOM, '', `${MESSAGE_ERROR.DOWNLOAD_SONG_ZIP} ${song.songName}`
-            )
-        });
+    downloadSongZip(songId: string): void {
+        this.downloadService.downloadAllTracksAsZip(songId);
     }
 }
